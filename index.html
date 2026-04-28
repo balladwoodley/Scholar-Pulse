@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scholar Pulse</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Academic Theory of Mind</p>
+          <h1>Scholar Pulse</h1>
+          <p class="lede">
+            Read an arXiv researcher like a research report. Scholar Pulse pulls
+            recent papers, looks for code-bearing mechanism, estimates
+            theory-versus-build energy, and sketches a first-pass Code-to-Concept
+            ratio.
+          </p>
+        </div>
+        <form class="query-bar" id="analyze-form">
+          <label class="field">
+            <span>Primary Scholar</span>
+            <input
+              id="query-input"
+              name="query"
+              type="text"
+              placeholder="Simeon Warner or 0000-0002-7970-7855"
+              value="Simeon Warner"
+              autocomplete="off"
+            />
+          </label>
+          <label class="field">
+            <span>Compare Against (Optional)</span>
+            <input
+              id="compare-input"
+              name="compare"
+              type="text"
+              placeholder="Another scholar or ORCID"
+              autocomplete="off"
+            />
+          </label>
+          <button id="analyze-button" type="submit">Compare</button>
+        </form>
+        <div id="loading-note" class="loading-note" aria-live="polite">
+          <div class="loading-note-copy">
+            <strong>Single-author analysis is the default.</strong>
+            <span>Add a second scholar only if you want a comparison pass.</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel profile-panel">
+          <div class="panel-head">
+            <h2>Subject</h2>
+            <p id="status-line">Ready.</p>
+          </div>
+          <div id="profile-card" class="profile-card empty">
+            <p>Run an analysis to populate the scholar sketch.</p>
+          </div>
+        </section>
+
+        <section class="panel summary-panel">
+          <div class="panel-head">
+            <h2>Research Read</h2>
+            <p>What the publication surface is actually signaling.</p>
+          </div>
+          <div id="summary-output" class="summary-output empty">
+            <p>The synthesis appears here.</p>
+          </div>
+        </section>
+
+        <section class="panel scoreboard-panel">
+          <div class="panel-head">
+            <h2>Signal Mix</h2>
+            <p>Oracle, Engineer, Scout.</p>
+          </div>
+          <div id="scoreboard" class="scoreboard empty">
+            <p>No scores yet.</p>
+          </div>
+        </section>
+
+        <section class="panel metrics-panel">
+          <div class="panel-head">
+            <h2>Code-to-Concept</h2>
+            <p>The first sprint’s mechanism anchor.</p>
+          </div>
+          <div id="metrics-output" class="metrics-output empty">
+            <p>Awaiting a scholar query.</p>
+          </div>
+        </section>
+
+        <section class="panel compare-panel">
+          <div class="panel-head">
+            <h2>Optional Comparison</h2>
+            <p>Add a second scholar for a synthesis pass. The main use case is the single-author report.</p>
+          </div>
+          <div id="comparison-output" class="comparison-output empty">
+            <p>No comparison loaded. Add a second scholar only if you want a side-by-side read.</p>
+          </div>
+        </section>
+
+        <section class="panel paper-panel">
+          <div class="panel-head">
+            <h2>Paper Map</h2>
+            <p>Recent papers tagged by energy profile and mechanism signal.</p>
+          </div>
+          <div id="paper-grid" class="paper-grid empty">
+            <p>Papers will appear here.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <template id="paper-card-template">
+      <article class="paper-card">
+        <div class="paper-topline">
+          <a class="paper-link" target="_blank" rel="noreferrer"></a>
+          <span class="paper-badge"></span>
+        </div>
+        <p class="paper-meta"></p>
+        <div class="paper-stats"></div>
+        <div class="paper-scores"></div>
+        <p class="paper-verdict"></p>
+      </article>
+    </template>
+
+    <script type="module" src="./ui.js"></script>
+  </body>
+</html>
