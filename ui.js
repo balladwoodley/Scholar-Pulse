@@ -25,6 +25,12 @@ form.addEventListener("submit", async (event) => {
   await runAnalysis(query, compareQuery);
 });
 
+compareInput.addEventListener("input", () => {
+  if (!analyzeButton.disabled) {
+    analyzeButton.textContent = compareInput.value.trim() ? "Compare" : "Analyze";
+  }
+});
+
 async function runAnalysis(query, compareQuery = "") {
   setLoadingState(
     true,
@@ -72,7 +78,10 @@ async function runAnalysis(query, compareQuery = "") {
 
 function setLoadingState(isLoading, message = "Ready.") {
   analyzeButton.disabled = isLoading;
-  analyzeButton.textContent = isLoading ? "Comparing..." : "Compare";
+  const hasCompare = compareInput.value.trim().length > 0;
+  analyzeButton.textContent = isLoading
+    ? (hasCompare ? "Comparing..." : "Analyzing...")
+    : (hasCompare ? "Compare" : "Analyze");
   statusLine.textContent = message;
   loadingNote.classList.toggle("is-loading", isLoading);
   if (!isLoading) {
@@ -247,7 +256,7 @@ function renderPapers(papers) {
     badge.classList.add(paper.dominantLayer);
     meta.textContent = [paper.published.slice(0, 10), paper.primaryCategory, paper.citationCount != null ? `${paper.citationCount} citations` : "citation data unavailable"]
       .filter(Boolean)
-      .join(" · ");
+      .join(" â€¢ ");
     stats.innerHTML = [
       paper.hasCodeLink ? "GitHub linked" : "No GitHub link",
       paper.hasZenodoDoi ? "Zenodo DOI" : null,

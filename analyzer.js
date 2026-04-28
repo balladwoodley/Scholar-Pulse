@@ -224,7 +224,7 @@ function classifyWorkhorse(raw, totals, papers) {
         : raw > 0.75
           ? "Balanced Theorist"
           : totals.scout > totals.engineer
-            ? "Posterur"
+            ? "Posturer"
             : "Theorist";
 
   const note =
@@ -268,8 +268,16 @@ function buildPaperVerdict(scores, paper) {
 }
 
 function scoreKeywords(text, weights) {
+  const wordCount = Math.max(text.split(/\s+/).length, 1);
   return Object.entries(weights).reduce((sum, [keyword, weight]) => {
-    return sum + (text.includes(keyword) ? weight : 0);
+    // Count occurrences rather than just presence, then scale by density
+    const regex = new RegExp(keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+    const hits = (text.match(regex) || []).length;
+    if (!hits) return sum;
+    // Density bonus: more hits relative to doc length = stronger signal
+    const density = hits / wordCount;
+    const densityMultiplier = 1 + Math.min(density * 300, 1.5); // caps at 2.5x
+    return sum + weight * hits * densityMultiplier;
   }, 0);
 }
 

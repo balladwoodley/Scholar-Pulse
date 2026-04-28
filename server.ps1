@@ -34,7 +34,7 @@ function Send-Response {
     [string]$ContentType
   )
 
-  $header = "HTTP/1.1 $StatusCode $StatusText`r`nContent-Length: $($Body.Length)`r`nContent-Type: $ContentType`r`nConnection: close`r`n`r`n"
+  $header = "HTTP/1.1 $StatusCode $StatusText`r`nContent-Length: $($Body.Length)`r`nContent-Type: $ContentType`r`nAccess-Control-Allow-Origin: *`r`nConnection: close`r`n`r`n"
   $headerBytes = [System.Text.Encoding]::ASCII.GetBytes($header)
   $Stream.Write($headerBytes, 0, $headerBytes.Length)
   if ($Body.Length -gt 0) {
